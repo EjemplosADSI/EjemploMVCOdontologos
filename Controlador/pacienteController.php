@@ -35,6 +35,16 @@ class pacienteController{
     static public function crear (){
         try {
             $arrayPaciente = array();
+
+            /* Subir Foto */
+            $archivoImagen = $_FILES['fotoPaciente'];
+            $resultUpload = General::uploadFile($archivoImagen,array("Ruta" => "../Fotos/Pacientes/"));
+            if ($resultUpload["Result"] == true){
+                $arrayPaciente['Foto'] = $resultUpload["Ruta"];
+            }else{
+                header("Location: ../Vista/pages/registroPaciente.php?respuesta=error&Mensaje=".$resultUpload["Error"]);
+            }
+
             $arrayPaciente['Nombres'] = $_POST['Nombres'];
             $arrayPaciente['Apellidos'] = $_POST['Apellidos'];
             $arrayPaciente['TipoDocumento'] = $_POST['TipoDocumento'];
@@ -44,7 +54,6 @@ class pacienteController{
             $arrayPaciente['Genero'] = $_POST['Genero'];
             $arrayPaciente['User'] = $_POST['User'];
             $arrayPaciente['Password'] = General::codificar($_POST['Password']);
-            $arrayPaciente['Foto'] = "Ruta";
             $arrayPaciente['Estado'] = "Activo";
             $paciente = new Paciente ($arrayPaciente);
             $paciente->insertar();
