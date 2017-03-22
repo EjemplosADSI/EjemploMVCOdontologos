@@ -22,6 +22,9 @@
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
 
+    <!-- Bootstrap Validator JavaScript -->
+    <script src="../vendor/bootstrap-validator/dist/validator.min.js"></script>
+
     <!-- Page-Level Demo Scripts - Notifications - Use for reference -->
     <script>
         // tooltip demo

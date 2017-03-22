@@ -1,3 +1,4 @@
+<?php require ("includes/verificarSession.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 

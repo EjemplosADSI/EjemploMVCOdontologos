@@ -8,80 +8,83 @@
     </schema>
     <schema id="3" parent="1" name="information_schema"/>
     <schema id="4" parent="1" name="mysql"/>
-    <schema id="5" parent="1" name="my_sena"/>
-    <schema id="6" parent="1" name="odontologia"/>
-    <schema id="7" parent="1" name="performance_schema"/>
-    <schema id="8" parent="1" name="phpmyadmin"/>
-    <schema id="9" parent="1" name="test"/>
-    <schema id="10" parent="1" name="ejemplopoo"/>
-    <schema id="11" parent="1" name="milady"/>
-    <schema id="12" parent="1" name="mydb"/>
-    <schema id="13" parent="1" name="tpc"/>
-    <table id="14" parent="2" name="cita"/>
-    <table id="15" parent="2" name="especialista"/>
-    <table id="16" parent="2" name="paciente"/>
-    <column id="17" parent="14" name="idCita">
+    <schema id="5" parent="1" name="performance_schema"/>
+    <schema id="6" parent="1" name="phpmyadmin"/>
+    <schema id="7" parent="1" name="test"/>
+    <schema id="8" parent="1" name="esiga_general"/>
+    <table id="9" parent="2" name="cita"/>
+    <table id="10" parent="2" name="especialista"/>
+    <table id="11" parent="2" name="paciente"/>
+    <column id="12" parent="9" name="idCita">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="18" parent="14" name="Fecha">
+    <column id="13" parent="9" name="Fecha">
       <Position>2</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="19" parent="14" name="Codigo">
+    <column id="14" parent="9" name="Codigo">
       <Position>3</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="20" parent="14" name="Estado">
+    <column id="15" parent="9" name="Estado">
       <Position>10</Position>
       <DataType>enum(&apos;Cancelado&apos;, &apos;Solicitada&apos;, &apos;Activa&apos;, &apos;Suspendida&apos;, &apos;Finalizado&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="21" parent="14" name="Valor">
+    <column id="16" parent="9" name="Valor">
       <Position>4</Position>
       <DataType>float|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="22" parent="14" name="NConsultorio">
+    <column id="17" parent="9" name="NConsultorio">
       <Position>5</Position>
       <DataType>smallint(6)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="23" parent="14" name="Observaciones">
+    <column id="18" parent="9" name="Observaciones">
       <Position>6</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="14" name="Motivo">
+    <column id="19" parent="9" name="Motivo">
       <Position>7</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="25" parent="14" name="idPaciente">
+    <column id="20" parent="9" name="idPaciente">
       <Position>8</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="26" parent="14" name="idEspecialista">
+    <column id="21" parent="9" name="idEspecialista">
       <Position>9</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="27" parent="14" name="fk_Cita_Especialista1_idx">
+    <index id="22" parent="9" name="fk_Cita_Especialista1_idx">
       <ColNames>idEspecialista</ColNames>
     </index>
-    <index id="28" parent="14" name="fk_Cita_Paciente_idx">
+    <index id="23" parent="9" name="fk_Cita_Paciente_idx">
       <ColNames>idPaciente</ColNames>
     </index>
-    <key id="29" parent="14" name="PRIMARY">
+    <index id="24" parent="9" name="idCita_UNIQUE">
+      <ColNames>idCita</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="25" parent="9" name="PRIMARY">
       <ColNames>idCita</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="30" parent="14" name="fk_Cita_Paciente">
+    <key id="26" parent="9" name="idCita_UNIQUE">
+      <ColNames>idCita</ColNames>
+      <UnderlyingIndexName>idCita_UNIQUE</UnderlyingIndexName>
+    </key>
+    <foreign-key id="27" parent="9" name="fk_Cita_Paciente">
       <ColNames>idPaciente</ColNames>
       <RefSchemaName>odontologos</RefSchemaName>
       <RefTableName>paciente</RefTableName>
@@ -89,7 +92,7 @@
       <OnUpdate>no-action</OnUpdate>
       <OnDelete>no-action</OnDelete>
     </foreign-key>
-    <foreign-key id="31" parent="14" name="fk_Cita_Especialista1">
+    <foreign-key id="28" parent="9" name="fk_Cita_Especialista1">
       <ColNames>idEspecialista</ColNames>
       <RefSchemaName>odontologos</RefSchemaName>
       <RefTableName>especialista</RefTableName>
@@ -97,115 +100,149 @@
       <OnUpdate>no-action</OnUpdate>
       <OnDelete>no-action</OnDelete>
     </foreign-key>
-    <column id="32" parent="15" name="idEspecialista">
+    <column id="29" parent="10" name="idEspecialista">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="33" parent="15" name="Tipo">
+    <column id="30" parent="10" name="Tipo">
       <Position>2</Position>
       <DataType>enum(&apos;Ortodoncista&apos;, &apos;Endodoncista&apos;, &apos;Periodoncista&apos;, &apos;Protesista&apos;, &apos;Cirujano Oral&apos;, &apos;Odontopediatra&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="15" name="Documento">
+    <column id="31" parent="10" name="Documento">
       <Position>6</Position>
       <DataType>bigint(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="35" parent="15" name="TipoDocumento">
+    <column id="32" parent="10" name="TipoDocumento">
       <Position>5</Position>
       <DataType>enum(&apos;C.C&apos;, &apos;C.E&apos;, &apos;C.I&apos;, &apos;T.I&apos;, &apos;RegistroCivil&apos;, &apos;RUT&apos;, &apos;Pasaporte&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="15" name="Email">
+    <column id="33" parent="10" name="Email">
       <Position>7</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="15" name="Direccion">
+    <column id="34" parent="10" name="Direccion">
       <Position>8</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="38" parent="15" name="Genero">
+    <column id="35" parent="10" name="Genero">
       <Position>10</Position>
       <DataType>enum(&apos;Masculino&apos;, &apos;Femenino&apos;, &apos;Indefinido&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="39" parent="15" name="Telefono">
+    <column id="36" parent="10" name="Telefono">
       <Position>9</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="40" parent="15" name="Nombres">
+    <column id="37" parent="10" name="Nombres">
       <Position>3</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="41" parent="15" name="Apellidos">
+    <column id="38" parent="10" name="Apellidos">
       <Position>4</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="42" parent="15" name="Estado">
-      <Position>11</Position>
+    <column id="39" parent="10" name="Estado">
+      <Position>12</Position>
       <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="43" parent="15" name="PRIMARY">
+    <column id="40" parent="10" name="Foto">
+      <Position>11</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="41" parent="10" name="idEspecialista_UNIQUE">
+      <ColNames>idEspecialista</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="42" parent="10" name="PRIMARY">
       <ColNames>idEspecialista</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="44" parent="16" name="idPaciente">
+    <key id="43" parent="10" name="idEspecialista_UNIQUE">
+      <ColNames>idEspecialista</ColNames>
+      <UnderlyingIndexName>idEspecialista_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="44" parent="11" name="idPaciente">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="45" parent="16" name="Apellidos">
+    <column id="45" parent="11" name="Apellidos">
       <Position>3</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="46" parent="16" name="Documento">
+    <column id="46" parent="11" name="Documento">
       <Position>5</Position>
       <DataType>bigint(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="47" parent="16" name="TipoDocumento">
+    <column id="47" parent="11" name="TipoDocumento">
       <Position>4</Position>
       <DataType>enum(&apos;C.C&apos;, &apos;C.E&apos;, &apos;C.I&apos;, &apos;T.I&apos;, &apos;RegistroCivil&apos;, &apos;RUT&apos;, &apos;Pasaporte&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="48" parent="16" name="Direccion">
+    <column id="48" parent="11" name="Direccion">
       <Position>6</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="49" parent="16" name="Email">
+    <column id="49" parent="11" name="Email">
       <Position>7</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="50" parent="16" name="Genero">
+    <column id="50" parent="11" name="Genero">
       <Position>8</Position>
       <DataType>enum(&apos;Masculino&apos;, &apos;Femenino&apos;, &apos;Indefinido&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="51" parent="16" name="Estado">
-      <Position>9</Position>
+    <column id="51" parent="11" name="Estado">
+      <Position>12</Position>
       <DataType>enum(&apos;Activo&apos;, &apos;Inactivo&apos;)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="52" parent="16" name="Nombres">
+    <column id="52" parent="11" name="Nombres">
       <Position>2</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="53" parent="16" name="PRIMARY">
+    <column id="53" parent="11" name="User">
+      <Position>9</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="54" parent="11" name="Password">
+      <Position>10</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="55" parent="11" name="Foto">
+      <Position>11</Position>
+      <DataType>text|0</DataType>
+    </column>
+    <index id="56" parent="11" name="idPaciente_UNIQUE">
+      <ColNames>idPaciente</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="57" parent="11" name="PRIMARY">
       <ColNames>idPaciente</ColNames>
       <Primary>1</Primary>
+    </key>
+    <key id="58" parent="11" name="idPaciente_UNIQUE">
+      <ColNames>idPaciente</ColNames>
+      <UnderlyingIndexName>idPaciente_UNIQUE</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

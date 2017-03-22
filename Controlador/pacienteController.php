@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once (__DIR__.'/../Modelo/Paciente.php');
+require_once (__DIR__.'/../Modelo/General.php');
 
 if(!empty($_GET['action'])){
     pacienteController::main($_GET['action']);
@@ -23,10 +24,12 @@ class pacienteController{
             pacienteController::CambiarEstado("Inactivo");
         }else if ($action == "ActivarPaciente"){
             pacienteController::CambiarEstado("Activo");
+        }else if($action == "Login"){
+            pacienteController::Login();
+        }else if($action == "CerrarSession"){
+            pacienteController::CerrarSession();
         }
-        /*else if ($action == "buscarID"){
-            pacienteController::buscarID(1);
-        }*/
+
     }
 
     static public function crear (){
@@ -39,13 +42,17 @@ class pacienteController{
             $arrayPaciente['Direccion'] = $_POST['Direccion'];
             $arrayPaciente['Email'] = $_POST['Email'];
             $arrayPaciente['Genero'] = $_POST['Genero'];
+            $arrayPaciente['User'] = $_POST['User'];
+            $arrayPaciente['Password'] = General::codificar($_POST['Password']);
+            $arrayPaciente['Foto'] = "Ruta";
             $arrayPaciente['Estado'] = "Activo";
             $paciente = new Paciente ($arrayPaciente);
             $paciente->insertar();
             header("Location: ../Vista/pages/registroPaciente.php?respuesta=correcto");
         } catch (Exception $e) {
             //var_dump($e);
-            header("Location: ../Vista/pages/registroPaciente.php?respuesta=error");
+            $txtMensaje = $e->getMessage();
+            header("Location: ../Vista/pages/registroPaciente.php?respuesta=error&Mensaje=".$txtMensaje);
         }
     }
 
@@ -53,6 +60,7 @@ class pacienteController{
         try {
             $TmpObject = Paciente::buscarForId($_SESSION["IdPaciente"]);
             $Estado = $TmpObject->getEstado();
+            $User = $TmpObject->getUser();
             $arrayPaciente = array();
             $arrayPaciente['Nombres'] = $_POST['Nombres'];
             $arrayPaciente['Apellidos'] = $_POST['Apellidos'];
@@ -61,14 +69,17 @@ class pacienteController{
             $arrayPaciente['Direccion'] = $_POST['Direccion'];
             $arrayPaciente['Email'] = $_POST['Email'];
             $arrayPaciente['Genero'] = $_POST['Genero'];
+            $arrayPaciente['User'] = $User;
+            $arrayPaciente['Password'] = General::codificar($_POST['Password']);
             $arrayPaciente['Estado'] = $Estado;
+            $arrayPaciente['Foto'] = "Ruta";
             $arrayPaciente['idPaciente'] = $_SESSION["IdPaciente"];
             $paciente = new Paciente ($arrayPaciente);
-            var_dump($arrayPaciente);
             $paciente->editar();
             unset($_SESSION["IdPaciente"]);
             header("Location: ../Vista/pages/actualizarPaciente.php?respuesta=correcto&IdPaciente=".$arrayPaciente['idPaciente']);
         } catch (Exception $e) {
+            unset($_SESSION["IdPaciente"]);
             $txtMensaje = $e->getMessage();
             header("Location: ../Vista/pages/actualizarPaciente.php?respuesta=error&Mensaje=".$txtMensaje);
         }
@@ -142,8 +153,65 @@ class pacienteController{
         return $htmlTable;
     }
 
+    public function Login (){
+        try {
+            $User = $_POST['User'];
+            $Password = General::codificar($_POST['Password']);
+            if(!empty($User) && !empty($Password)){
+                $respuesta = pacienteController::validLogin($User, $Password);
+                if (is_array($respuesta)) {
+                    $_SESSION['DataPaciente'] = $respuesta;
+                    echo TRUE;
+                }else if($respuesta == "Password Incorrecto"){
+                    echo "<div class='alert alert-danger alert-dismissable'>";
+                    echo "    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+                    echo "    <strong>Error!</strong>. La Contraseña No Coincide Con El Usuario.";
+                    echo "</div>";
+                }else if($respuesta == "No existe el usuario"){
+                    echo "<div class='alert alert-danger alert-dismissable'>";
+                    echo "    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+                    echo "    <strong>Error!</strong>. No Existe Un Usuario Con Estos Datos.";
+                    echo "</div>";
+                }
+            }else{
+                echo "<div class='alert alert-danger alert-dismissable'>";
+                echo "    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+                echo "    <strong>Error!</strong>.Datos Vacios.";
+                echo "</div>";
+            }
+        } catch (Exception $e) {
+            echo "<div class='alert alert-danger alert-dismissable'>";
+            echo "    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+            echo "    <strong>Error!</strong>. "+$e->getMessage();
+            echo "</div>";
+        }
+    }
 
+    public function validLogin ($User, $Password) {
 
+        $arrPacientes = array();
+        $tmp = new Paciente();
+        $getTempUser = $tmp->getRows("SELECT * FROM Paciente WHERE User = '".$User."'");
+        if(count($getTempUser) >= 1){
+            $getrows = $tmp->getRows("SELECT * FROM Paciente WHERE User = '".$User."' AND Password = '".$Password."'");
+            if(count($getrows) >= 1){
+                foreach ($getrows as $valor) {
+                    return $valor;
+                }
+            }else{
+                return "Password Incorrecto";
+            }
+        }else{
+            return "No existe el usuario";
+        }
+        $tmp->Disconnect();
+        return $arrPacientes;
+    }
+
+    public function CerrarSession (){
+        session_destroy();
+        header("Location: ../Vista/pages/login.php");
+    }
 
     /*
     static public function buscarID ($id){

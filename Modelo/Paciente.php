@@ -19,6 +19,9 @@ class Paciente extends db_abstract_class
     private $Direccion;
     private $Email;
     private $Genero;
+    private $User;
+    private $Password;
+    private $Foto;
     private $Estado;
 
     public function __construct($odontologos_data=array())
@@ -37,6 +40,9 @@ class Paciente extends db_abstract_class
             $this->Direccion = "";
             $this->Email = "";
             $this->Genero = "";
+            $this->User = "";
+            $this->Password = "";
+            $this->Foto = "";
             $this->Estado = "";
         }
     }
@@ -176,6 +182,54 @@ class Paciente extends db_abstract_class
     }
 
     /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->User;
+    }
+
+    /**
+     * @param string $User
+     */
+    public function setUser($User)
+    {
+        $this->User = $User;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->Password;
+    }
+
+    /**
+     * @param string $Password
+     */
+    public function setPassword($Password)
+    {
+        $this->Password = $Password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFoto()
+    {
+        return $this->Foto;
+    }
+
+    /**
+     * @param string $Foto
+     */
+    public function setFoto($Foto)
+    {
+        $this->Foto = $Foto;
+    }
+
+    /**
      * @return mixed
      */
     public function getEstado()
@@ -204,6 +258,9 @@ class Paciente extends db_abstract_class
             $pacien->Direccion = $getrow['Direccion'];
             $pacien->Email = $getrow['Email'];
             $pacien->Genero = $getrow['Genero'];
+            $pacien->User = $getrow['User'];
+            $pacien->Password = $getrow['Password'];
+            $pacien->Foto = $getrow['Foto'];
             $pacien->Estado = $getrow['Estado'];
             $pacien->Disconnect();
             return $pacien;
@@ -228,6 +285,9 @@ class Paciente extends db_abstract_class
             $pacien->Direccion = $valor['Direccion'];
             $pacien->Email = $valor['Email'];
             $pacien->Genero = $valor['Genero'];
+            $pacien->User = $valor['User'];
+            $pacien->Password = $valor['Password'];
+            $pacien->Foto = $valor['Foto'];
             $pacien->Estado = $valor['Estado'];
             array_push($arrPacientes, $pacien);
         }
@@ -242,7 +302,7 @@ class Paciente extends db_abstract_class
 
     public function insertar()
     {
-        $this->insertRow("INSERT INTO odontologos.paciente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)", array(
+        $this->insertRow("INSERT INTO odontologos.paciente VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array(
                 $this->Nombres,
                 $this->Apellidos,
                 $this->TipoDocumento,
@@ -250,6 +310,9 @@ class Paciente extends db_abstract_class
                 $this->Direccion,
                 $this->Email,
                 $this->Genero,
+                $this->User,
+                $this->Password,
+                $this->Foto,
                 $this->Estado
             )
         );
@@ -259,7 +322,7 @@ class Paciente extends db_abstract_class
     public function editar()
     {
         $arrUser = (array) $this;
-        $this->updateRow("UPDATE odontologos.paciente SET Nombres = ?, Apellidos = ?, TipoDocumento = ?, Documento = ?, Direccion = ?, Email = ?, Genero = ?, Estado = ? WHERE idPaciente = ?", array(
+        $this->updateRow("UPDATE odontologos.paciente SET Nombres = ?, Apellidos = ?, TipoDocumento = ?, Documento = ?, Direccion = ?, Email = ?, Genero = ?, User = ?, Password = ?, Foto = ?, Estado = ? WHERE idPaciente = ?", array(
             $this->Nombres,
             $this->Apellidos,
             $this->TipoDocumento,
@@ -267,6 +330,9 @@ class Paciente extends db_abstract_class
             $this->Direccion,
             $this->Email,
             $this->Genero,
+            $this->User,
+            $this->Password,
+            $this->Foto,
             $this->Estado,
             $this->idPaciente
         ));

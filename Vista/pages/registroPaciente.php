@@ -54,24 +54,27 @@
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <form role="form" method="post" action="../../Controlador/pacienteController.php?action=crear">
+                                    <form role="form" data-toggle="validator" method="post" action="../../Controlador/pacienteController.php?action=crear">
                                         <div class="form-group">
                                             <label>Nombres</label>
                                             <input required data-toggle="tooltip" title="Sin Signos de puntuación o caracteres especiales" data-placement="top" maxlength="60" id="Nombres" name="Nombres" minlength="2" class="form-control newTooltip" placeholder="Ingrese Sus Nombres Completos">
+                                            <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Apellidos</label>
                                             <input required maxlength="60" id="Apellidos" name="Apellidos" minlength="2" class="form-control" placeholder="Ingrese Sus Apellidos Completos">
+                                            <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Direccion</label>
                                             <input required maxlength="60" id="Direccion" name="Direccion" minlength="7" class="form-control" placeholder="Ingrese su direccion de residencia">
+                                            <div class="help-block with-errors"></div>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Tipo Documento</label>
                                             <select required id="TipoDocumento" name="TipoDocumento" class="form-control">
-                                                <option>Seleccione</option>
+                                                <option value="">Seleccione</option>
                                                 <option value="C.C">Cedula de Ciudadania</option>
                                                 <option value="T.I">Tarjeta de Identidad</option>
                                                 <option value="C.E">Cedula de Extranjeria</option>
@@ -79,31 +82,59 @@
                                                 <option value="RUT">Registro Unico Tributario</option>
                                                 <option value="Otro">Otro</option>
                                             </select>
+                                            <div class="help-block with-errors"></div>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Documento</label>
                                             <input type="number" required max="3000000000" min="1000000" maxlength="12" id="Documento" name="Documento" minlength="7" class="form-control" placeholder="Ingrese Documento Completo">
+                                            <div class="help-block with-errors"></div>
                                         </div>
 
-                                        <label>Email</label>
-                                        <div class="form-group input-group">
-                                            <span class="input-group-addon">@</span>
-                                            <input type="email" required maxlength="45" id="Email" name="Email" minlength="7" class="form-control" placeholder="Ingrese su correo electronico">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">@</span>
+                                                <input type="email" required maxlength="45" id="Email" name="Email" minlength="7" class="form-control" placeholder="Ingrese su correo electronico">
+                                            </div>
+                                            <div class="help-block with-errors"></div>
                                         </div>
 
                                         <div class="form-group">
                                             <label>Genero</label>
                                             <select required id="Genero" name="Genero" class="form-control">
-                                                <option>Seleccione</option>
+                                                <option value="">Seleccione</option>
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Femenino">Femenino</option>
                                                 <option value="Indefinido">Indefinido</option>
                                             </select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>User</label>
+                                            <input required maxlength="20" id="User" name="User" minlength="7" class="form-control" placeholder="Ingrese su Usuario de Acceso">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Password" class="control-label">Password</label>
+                                            <div class="form-inline row">
+                                                <div class="form-group col-sm-3">
+                                                    <input type="password" data-minlength="6" class="form-control" id="Password" placeholder="Contraseña de Acceso " required>
+                                                    <div class="help-block">Minimo 6 caracteres</div>
+                                                </div>
+                                                <div class="form-group col-sm-6">
+                                                    <input type="password" class="form-control" id="inputPasswordConfirm" data-match="#Password" data-match-error="Las Contraseñas no Coinciden" placeholder="Confirmar Contraseña" required>
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Enviar</button>
                                         <button type="reset" class="btn btn-warning">Cancelar</button>
+
+
                                     </form>
                                 </div>
                             </div>
